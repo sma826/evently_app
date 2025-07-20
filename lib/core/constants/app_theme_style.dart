@@ -10,6 +10,10 @@ class AppTheme {
       unselectedItemColor: AppColors.white,
       // showSelectedLabels: true,
     ),
+    // floatingActionButtonTheme: FloatingActionButtonThemeData(
+    //   backgroundColor: AppColors.primaryColor,
+    //   shape: CircleBorder()
+    // ),
   );
   static ThemeData darkTheme = ThemeData();
 }

@@ -23,37 +23,59 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: tabs[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          if (currentIndex == index) return;
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: NavBarIcon(imageName: 'Home'),
-            activeIcon: NavBarIcon(imageName: 'Home_active'),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: NavBarIcon(imageName: 'map'),
-            activeIcon: NavBarIcon(imageName: 'Map_active'),
-            label: 'Map',
-          ),
-          BottomNavigationBarItem(
-            icon: NavBarIcon(imageName: 'Heart'),
-            activeIcon: NavBarIcon(imageName: 'Heart_active'),
-            label: 'Love',
-          ),
-          BottomNavigationBarItem(
-            icon: NavBarIcon(imageName: 'profile'),
-            activeIcon: NavBarIcon(imageName: 'profile_active'),
-            label: 'Profile',
-          ),
-        ],
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 5,
+        clipBehavior: Clip.antiAlias,
+        padding: EdgeInsets.zero,
+        color: AppColors.primaryColor,
+        child: BottomNavigationBar(
+          elevation: 0,
+          currentIndex: currentIndex,
+          onTap: (index) {
+            if (currentIndex == index) return;
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: NavBarIcon(imageName: 'Home'),
+              activeIcon: NavBarIcon(imageName: 'Home_active'),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: NavBarIcon(imageName: 'map'),
+              activeIcon: NavBarIcon(imageName: 'Map_active'),
+              label: 'Map',
+            ),
+            BottomNavigationBarItem(
+              icon: NavBarIcon(imageName: 'Heart'),
+              activeIcon: NavBarIcon(imageName: 'Heart_active'),
+              label: 'Love',
+            ),
+            BottomNavigationBarItem(
+              icon: NavBarIcon(imageName: 'profile'),
+              activeIcon: NavBarIcon(imageName: 'profile_active'),
+              label: 'Profile',
+            ),
+          ],
+        ),
       ),
+      floatingActionButton: SizedBox(
+        width: 70,
+        height: 70,
+        child: FloatingActionButton(
+          elevation: 0,
+          onPressed: () {},
+          child: Icon(Icons.add, size: 40, color: AppColors.white,),
+          backgroundColor: AppColors.primaryColor,
+          shape: CircleBorder(
+              side: BorderSide(color: AppColors.white, width: 3,)
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
