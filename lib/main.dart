@@ -1,4 +1,6 @@
 import 'package:evently_application/core/constants/app_theme_style.dart';
+import 'package:evently_application/modules/authentication/login_screen.dart';
+import 'package:evently_application/modules/authentication/register_screen.dart';
 import 'package:evently_application/modules/home%20screen/home_screen.dart';
 import 'package:evently_application/modules/onboarding%20screens/introScreen1.dart';
 import 'package:evently_application/modules/onboarding%20screens/introScreen2.dart';
@@ -21,13 +23,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // initialRoute: SplashView.routeNames, // start at splash
+      // initialRoute: SplashView.routeName, // start at splash
       // routes: {
-      //   SplashView.routeNames: (_) => SplashView(),
-      //   PreIntroScreen.routeNames: (_) => PreIntroScreen(),
-      //   IntroScreens.routeNames: (_) => IntroScreens(),
+      //   HomeScreen.routeName: (_) => HomeScreen(),
+      //   SplashView.routeName: (_) => SplashView(),
+      //   PreIntroScreen.routeName: (_) => PreIntroScreen(),
+      //   IntroScreens.routeName: (_) => IntroScreens(),
+      //   LoginScreen.routeName: (_) => LoginScreen(),
+      //   RegisterScreen.routeName: (_) => RegisterScreen(),
       // },
-      home: HomeScreen(),
+      home: RegisterScreen(),
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,

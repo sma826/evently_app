@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 
 class PreIntroScreen extends StatefulWidget {
-  static var routeNames = '/pre_intro_screen';
+  static const String routeName = '/preintro';
 
   const PreIntroScreen({super.key});
 

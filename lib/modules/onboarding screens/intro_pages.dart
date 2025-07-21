@@ -1,5 +1,5 @@
 import 'package:evently_application/core/constants/app_colors.dart';
-import 'package:evently_application/modules/login%20screen/login_screen.dart';
+import 'package:evently_application/modules/authentication/login_screen.dart';
 import 'package:evently_application/modules/onboarding%20screens/introScreen1.dart';
 import 'package:evently_application/modules/onboarding%20screens/introScreen2.dart';
 import 'package:evently_application/modules/onboarding%20screens/introScreen3.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class IntroScreens extends StatefulWidget {
-  static const routeNames = '/intro';
+  static const String routeName = '/intro';
 
   const IntroScreens({super.key});
 
