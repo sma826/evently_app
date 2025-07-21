@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 ],
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 5,),
               DefaultElevatedButton(text: 'Login', onPressed: () {}),
               SizedBox(height: 5,),
               Row(
