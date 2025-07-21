@@ -7,7 +7,7 @@ import 'package:evently_application/taps/profile/profile_tap.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const String routeName = "/home_screen";
+  static const String routeName = "/home";
 
   const HomeScreen({super.key});
 
