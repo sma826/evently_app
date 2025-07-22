@@ -1,16 +1,22 @@
 import 'package:evently_application/core/constants/app_colors.dart';
+import 'package:evently_application/models/category_data_model.dart';
 import 'package:evently_application/taps/home/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeHeader extends StatelessWidget {
+class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
+
+  @override
+  State<HomeHeader> createState() => _HomeHeaderState();
+}
+
+class _HomeHeaderState extends State<HomeHeader> {
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      // color: AppColors.primaryColor,
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
         borderRadius: BorderRadius.only(
@@ -60,35 +66,34 @@ class HomeHeader extends StatelessWidget {
               ),
               SizedBox(height: 12),
               DefaultTabController(
-                length: 4,
+                length: CategoryModel.categories.length + 1,
                 child: TabBar(
                   tabAlignment: TabAlignment.start,
                   isScrollable: true,
                   dividerColor: Colors.transparent,
                   indicatorColor: Colors.transparent,
-                  labelPadding: EdgeInsets.only(right: 10),
+                    labelPadding: EdgeInsets.only(right: 5),
+                    onTap: (index) {
+                      if (currentIndex == index) return;
+                      currentIndex = index;
+                      setState(() {});
+                    },
                   tabs: [
                     TabItem(
                       label: "All",
                       icon: Icons.all_inclusive_rounded,
-                      isSelected: true,
+                      isSelected: currentIndex == 0,
                     ),
-                    TabItem(
-                      label: "Sport",
-                      icon: Icons.sports_basketball,
-                      isSelected: false,
+                    ...CategoryModel.categories
+                        .map((category) =>
+                        TabItem(
+                          label: category.name,
+                          icon: category.icon,
+                          isSelected: currentIndex ==
+                              CategoryModel.categories.indexOf(category) + 1,
+                        )
                     ),
-                    TabItem(
-                      label: "Book Club",
-                      icon: Icons.menu_book,
-                      isSelected: false,
-                    ),
-                    TabItem(
-                      label: "Birthday",
-                      icon: Icons.add_alert,
-                      isSelected: false,
-                    ),
-                  ],
+                  ]
                 ),
               ),
             ],
