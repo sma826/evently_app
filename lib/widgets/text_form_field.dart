@@ -23,6 +23,7 @@ class DefaultTextFormField extends StatelessWidget {
       onChanged: onChange,
       decoration: InputDecoration(
         hintText: hintText,
+        hintStyle: TextStyle(color: AppColors.primaryColor),
         prefixIcon:
             prefixIconImageName == null
                 ? null
@@ -40,11 +41,11 @@ class DefaultTextFormField extends StatelessWidget {
           borderSide: BorderSide(color: Colors.grey),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.grey),
+          borderSide: BorderSide(color: AppColors.primaryColor),
           borderRadius: BorderRadius.circular(16),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.grey),
+          borderSide: BorderSide(color: AppColors.primaryColor),
           borderRadius: BorderRadius.circular(16),
         ),
         errorBorder: OutlineInputBorder(
