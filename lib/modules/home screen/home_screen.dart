@@ -1,4 +1,5 @@
 import 'package:evently_application/core/constants/app_colors.dart';
+import 'package:evently_application/modules/create%20event%20screen/create_event_screen.dart';
 import 'package:evently_application/nav_bar_icon.dart';
 import 'package:evently_application/taps/home/home_tap.dart';
 import 'package:evently_application/taps/love/love_tap.dart';
@@ -67,7 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 70,
         child: FloatingActionButton(
           elevation: 0,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CreateEventScreen()),
+            );
+          },
           child: Icon(Icons.add, size: 40, color: AppColors.white,),
           backgroundColor: AppColors.primaryColor,
           shape: CircleBorder(
