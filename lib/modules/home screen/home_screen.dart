@@ -73,7 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(builder: (context) => CreateEventScreen()),
             );
-          }child: Icon(Icons.add, size: 40, color: AppColors.white,),
+          },
+          child: Icon(Icons.add, size: 40, color: AppColors.white,),
           backgroundColor: AppColors.primaryColor,
           shape: CircleBorder(
               side: BorderSide(color: AppColors.white, width: 3,)
