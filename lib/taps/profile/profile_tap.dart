@@ -10,12 +10,15 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
-  String selectedLanguage = "Arabic";
+  // String selectedLanguage = "Arabic";
+  // String selectedTheme = "Light";
 
-  String selectedTheme = "Light";
+  final List<Language> languages = [
+    Language(name: "English", code: "en"),
+    Language(name: "العربية", code: "ar")
+  ];
 
-  final List<String> languages = ["English", "Arabic"];
-  final List<String> themes = ["Light", "Dark"];
+  // final List<String> themes = ["Light", "Dark"];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class _ProfileTabState extends State<ProfileTab> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: DropdownButtonFormField(
-            value: selectedLanguage,
+            value: 'en',
             decoration: InputDecoration(
               border: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -60,71 +63,79 @@ class _ProfileTabState extends State<ProfileTab> {
             style: TextStyle(
                 color: AppColors.primaryColor, fontWeight: FontWeight.bold),
             iconEnabledColor: AppColors.primaryColor,
-            items: languages.map((lang) {
-              return DropdownMenuItem(
-                value: lang,
-                child: Text(lang),
-              );
-            }).toList(),
+            items: languages.map((language) =>
+                DropdownMenuItem(
+                    value: language.code,
+                    child: Text(language.name))
+            ).toList(),
             onChanged: (value) {
               setState(() {
-                selectedLanguage = value!;
               });
             },
           ),
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 30,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text("Theme",
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Inter',
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Dark Theme",
+                style: TextStyle(
+                  color: AppColors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'Inter',
+                ),
+              ),
+              Switch(
+                value: true,
+                onChanged: (value) {},
+                activeTrackColor: AppColors.primaryColor,
+                inactiveTrackColor: AppColors.grey,
+                inactiveThumbColor: AppColors.white,
+              )
+            ],
           ),
         ),
-        SizedBox(height: 8,),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: DropdownButtonFormField(
-            value: selectedTheme,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: AppColors.primaryColor, width: 1),
-                  borderRadius: BorderRadius.circular(16)
-              ),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: AppColors.primaryColor, width: 1),
-                  borderRadius: BorderRadius.circular(16)
-              ),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: AppColors.primaryColor, width: 1),
-                  borderRadius: BorderRadius.circular(16)
-              ),
-            ),
-            dropdownColor: AppColors.white,
-            style: TextStyle(
-                color: AppColors.primaryColor, fontWeight: FontWeight.bold),
-            iconEnabledColor: AppColors.primaryColor,
-            items: themes.map((theme) {
-              return DropdownMenuItem(
-                value: theme,
-                child: Text(theme),
-              );
-            }).toList(),
-            onChanged: (value) {
-              setState(() {
-                selectedTheme = value!;
-              });
-            },
-          ),
-        ),
-        SizedBox(height: 295,),
+        // SizedBox(height: 8,),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 16),
+        //   child: DropdownButtonFormField(
+        //     decoration: InputDecoration(
+        //       border: OutlineInputBorder(
+        //           borderSide: BorderSide(
+        //               color: AppColors.primaryColor, width: 1),
+        //           borderRadius: BorderRadius.circular(16)
+        //       ),
+        //       enabledBorder: OutlineInputBorder(
+        //           borderSide: BorderSide(
+        //               color: AppColors.primaryColor, width: 1),
+        //           borderRadius: BorderRadius.circular(16)
+        //       ),
+        //       focusedBorder: OutlineInputBorder(
+        //           borderSide: BorderSide(
+        //               color: AppColors.primaryColor, width: 1),
+        //           borderRadius: BorderRadius.circular(16)
+        //       ),
+        //     ),
+        //     dropdownColor: AppColors.white,
+        //     style: TextStyle(
+        //         color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+        //     iconEnabledColor: AppColors.primaryColor,
+        //     items: themes.map((theme) {
+        //       return DropdownMenuItem(
+        //         value: theme,
+        //         child: Text(theme),
+        //       );
+        //     }).toList(),
+        //     onChanged: (value) {
+        //       setState(() {
+        //       });
+        //     },
+        //   ),
+        // ),
+        SizedBox(height: 320,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: ElevatedButton(
@@ -158,4 +169,11 @@ class _ProfileTabState extends State<ProfileTab> {
       ],
     );
   }
+}
+
+class Language {
+  String code;
+  String name;
+
+  Language({required this.name, required this.code});
 }
