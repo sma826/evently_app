@@ -2,7 +2,7 @@ import 'package:evently_application/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class DefaultTextFormField extends StatelessWidget {
+class DefaultTextFormField extends StatefulWidget {
   String hintText;
   TextEditingController? controller;
   void Function(String)? onChange;
@@ -17,20 +17,25 @@ class DefaultTextFormField extends StatelessWidget {
   });
 
   @override
+  State<DefaultTextFormField> createState() => _DefaultTextFormFieldState();
+}
+
+class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      onChanged: onChange,
+      controller: widget.controller,
+      onChanged: widget.onChange,
       decoration: InputDecoration(
-        hintText: hintText,
+        hintText: widget.hintText,
         hintStyle: TextStyle(color: AppColors.primaryColor),
         prefixIcon:
-            prefixIconImageName == null
+            widget.prefixIconImageName == null
                 ? null
                 : Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: SvgPicture.asset(
-                    'assets/icons/$prefixIconImageName.svg',
+                    'assets/icons/${widget.prefixIconImageName}.svg',
                     width: 24,
                     height: 24,
                     fit: BoxFit.scaleDown,
