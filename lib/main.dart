@@ -1,5 +1,5 @@
 import 'package:evently_application/core/constants/app_theme_style.dart';
-import 'package:evently_application/modules/authentication/login_screen.dart';
+import 'package:evently_application/modules/home%20screen/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       //   RegisterScreen.routeName: (_) => RegisterScreen(),
       //   CreateEventScreen.routeName : (_) => CreateEventScreen(),
       // },
-      home: LoginScreen(),
+      home: HomeScreen(),
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,

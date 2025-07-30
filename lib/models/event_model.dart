@@ -10,7 +10,7 @@ class EventModel {
   CategoryModel category;
 
   EventModel({
-    required this.id,
+    this.id = '',
     required this.tittle,
     required this.description,
     required this.dateTime,
