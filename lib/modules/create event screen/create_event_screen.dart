@@ -6,6 +6,7 @@ import 'package:evently_application/modules/create%20event%20screen/tab_item_eve
 import 'package:evently_application/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../widgets/text_form_field.dart';
 
@@ -27,6 +28,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
+  DateFormat dateFormat = DateFormat('d/M/yyyy');
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
-                    "assets/images/book club.png",
+                    "assets/images/${selectedCategory.imageName}.png",
                     height: MediaQuery.sizeOf(context).height * 0.23,
                     width: double.infinity,
                     fit: BoxFit.fill,
@@ -86,6 +88,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                   onTap: (index) {
                     if (currentIndex == index) return;
                     currentIndex = index;
+                    selectedCategory = CategoryModel.categories[index];
                     setState(() {});
                   },
                 ),
@@ -173,7 +176,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                             child: Text(
                               selectedDate == null
                                   ? "Choose Date"
-                                  : selectedDate.toString(),
+                                  : dateFormat.format(selectedDate!),
                               style: TextStyle(
                                 color: AppColors.primaryColor,
                                 fontSize: 16,
@@ -213,7 +216,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                             child: Text(
                               selectedTime == null
                                   ? "Choose Time"
-                                  : selectedTime.toString(),
+                                  : selectedTime!.format(context),
                               style: TextStyle(
                                 color: AppColors.primaryColor,
                                 fontSize: 16,
@@ -306,7 +309,9 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
         dateTime: dateTime,
         category: selectedCategory,
       );
-      FirebaseService.createEvent(event);
+      FirebaseService.createEvent(event).then((_) {
+        Navigator.of(context).pop();
+      });
     }
   }
 }
