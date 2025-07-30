@@ -1,5 +1,7 @@
 import 'package:evently_application/core/constants/app_colors.dart';
+import 'package:evently_application/firebase_service.dart';
 import 'package:evently_application/models/category_data_model.dart';
+import 'package:evently_application/models/event_model.dart';
 import 'package:evently_application/modules/create%20event%20screen/tab_item_event_screen.dart';
 import 'package:evently_application/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +19,14 @@ class CreateEventScreen extends StatefulWidget {
 }
 
 class _CreateEventScreenState extends State<CreateEventScreen> {
+  int currentIndex = 0;
+
+  CategoryModel selectedCategory = CategoryModel.categories.first;
   TextEditingController tittleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +77,17 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                             (category) => TabItemEventScreen(
                               label: category.name,
                               icon: category.icon,
-                              isSelected: false,
+                              isSelected:
+                                  currentIndex ==
+                                  CategoryModel.categories.indexOf(category),
                             ),
                           )
                           .toList(),
+                  onTap: (index) {
+                    if (currentIndex == index) return;
+                    currentIndex = index;
+                    setState(() {});
+                  },
                 ),
               ),
               Padding(
@@ -152,9 +165,15 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                                 initialEntryMode:
                                     DatePickerEntryMode.calendarOnly,
                               );
+                              if (date != null) {
+                                selectedDate = date;
+                                setState(() {});
+                              }
                             },
                             child: Text(
-                              "Choose Date",
+                              selectedDate == null
+                                  ? "Choose Date"
+                                  : selectedDate.toString(),
                               style: TextStyle(
                                 color: AppColors.primaryColor,
                                 fontSize: 16,
@@ -186,9 +205,15 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                                 context: context,
                                 initialTime: TimeOfDay.now(),
                               );
+                              if (time != null) {
+                                selectedTime = time;
+                                setState(() {});
+                              }
                             },
                             child: Text(
-                              "Choose Time",
+                              selectedTime == null
+                                  ? "Choose Time"
+                                  : selectedTime.toString(),
                               style: TextStyle(
                                 color: AppColors.primaryColor,
                                 fontSize: 16,
@@ -251,7 +276,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       SizedBox(height: 16),
                       DefaultElevatedButton(
                         text: "Add Event",
-                        onPressed: () {},
+                        onPressed: createEvent,
                       ),
                     ],
                   ),
@@ -265,6 +290,23 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   }
 
   void createEvent() {
-    if (formKey.currentState!.validate()) {}
+    if (formKey.currentState!.validate() &&
+        selectedDate != null &&
+        selectedTime != null) {
+      DateTime dateTime = DateTime(
+        selectedDate!.year,
+        selectedDate!.month,
+        selectedDate!.day,
+        selectedTime!.hour,
+        selectedTime!.minute,
+      );
+      EventModel event = EventModel(
+        tittle: tittleController.text,
+        description: descriptionController.text,
+        dateTime: dateTime,
+        category: selectedCategory,
+      );
+      FirebaseService.createEvent(event);
+    }
   }
 }

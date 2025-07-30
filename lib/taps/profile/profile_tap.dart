@@ -1,6 +1,7 @@
 import 'package:evently_application/core/constants/app_colors.dart';
 import 'package:evently_application/taps/profile/profile_header.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -139,7 +140,10 @@ class _ProfileTabState extends State<ProfileTab> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              GoogleSignIn googleSignIn = GoogleSignIn();
+              googleSignIn.disconnect();
+            },
             style: ElevatedButton.styleFrom(
               // padding: EdgeInsets.symmetric(horizontal: 156,vertical: 16),
               fixedSize: Size(MediaQuery
