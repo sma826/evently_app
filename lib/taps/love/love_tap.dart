@@ -1,8 +1,6 @@
 import 'package:evently_application/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/event_item.dart';
-
 class LoveTab extends StatelessWidget {
   const LoveTab({super.key});
 
@@ -19,13 +17,13 @@ class LoveTab extends StatelessWidget {
               onChange: (query) {},
             ),
             SizedBox(height: 16,),
-            Expanded(
-              child: ListView.separated(
-                itemBuilder: (_, index) => EventItem(),
-                separatorBuilder: (_, _) => SizedBox(height: 16,),
-                itemCount: 20,
-              ),
-            ),
+            // Expanded(
+            //   child: ListView.separated(
+            //     itemBuilder: (_, index) => EventItem(),
+            //     separatorBuilder: (_, _) => SizedBox(height: 16,),
+            //     itemCount: 20,
+            //   ),
+            // ),
           ],
         ),
       ),
