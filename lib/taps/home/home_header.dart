@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeHeader extends StatefulWidget {
-  const HomeHeader({super.key});
+  void Function(CategoryModel?) filterEvents;
+
+  HomeHeader({required this.filterEvents});
 
   @override
   State<HomeHeader> createState() => _HomeHeaderState();
@@ -72,28 +74,33 @@ class _HomeHeaderState extends State<HomeHeader> {
                   isScrollable: true,
                   dividerColor: Colors.transparent,
                   indicatorColor: Colors.transparent,
-                    labelPadding: EdgeInsets.only(right: 5),
-                    onTap: (index) {
-                      if (currentIndex == index) return;
-                      currentIndex = index;
-                      setState(() {});
-                    },
+                  labelPadding: EdgeInsets.only(right: 5),
+                  onTap: (index) {
+                    if (currentIndex == index) return;
+                    currentIndex = index;
+                    CategoryModel? selectedCategory =
+                        currentIndex == 0
+                            ? null
+                            : CategoryModel.categories[currentIndex - 1];
+                    widget.filterEvents(selectedCategory);
+                    setState(() {});
+                  },
                   tabs: [
                     TabItem(
                       label: "All",
                       icon: Icons.all_inclusive_rounded,
                       isSelected: currentIndex == 0,
                     ),
-                    ...CategoryModel.categories
-                        .map((category) =>
-                        TabItem(
-                          label: category.name,
-                          icon: category.icon,
-                          isSelected: currentIndex ==
-                              CategoryModel.categories.indexOf(category) + 1,
-                        )
+                    ...CategoryModel.categories.map(
+                      (category) => TabItem(
+                        label: category.name,
+                        icon: category.icon,
+                        isSelected:
+                            currentIndex ==
+                            CategoryModel.categories.indexOf(category) + 1,
+                      ),
                     ),
-                  ]
+                  ],
                 ),
               ),
             ],
