@@ -11,9 +11,10 @@ import 'package:intl/intl.dart';
 import '../../widgets/text_form_field.dart';
 
 class EditScreen extends StatefulWidget {
-  static const String routeName = "/create-event";
+  static const String routeName = "/edit-event";
+  EventModel event;
 
-  const EditScreen({super.key});
+  EditScreen({Key? key, required this.event}) : super(key: key);
 
   @override
   State<EditScreen> createState() => _EditScreenState();
@@ -29,6 +30,21 @@ class _EditScreenState extends State<EditScreen> {
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
   DateFormat dateFormat = DateFormat('d/M/yyyy');
+
+  @override
+  void initState() {
+    super.initState();
+
+    tittleController.text = widget.event.tittle;
+    descriptionController.text = widget.event.description;
+    selectedCategory = widget.event.category;
+    selectedDate = widget.event.dateTime;
+    selectedTime = TimeOfDay.fromDateTime(widget.event.dateTime);
+
+    currentIndex = CategoryModel.categories.indexWhere(
+      (category) => category.name == widget.event.category.name,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -259,7 +275,7 @@ class _EditScreenState extends State<EditScreen> {
                             ),
                             SizedBox(width: 13.5),
                             Text(
-                              "Choose Event Location",
+                              "Cairo , Egypt",
                               style: TextStyle(
                                 color: AppColors.primaryColor,
                                 fontFamily: "Inter",
@@ -278,8 +294,8 @@ class _EditScreenState extends State<EditScreen> {
                       ),
                       SizedBox(height: 16),
                       DefaultElevatedButton(
-                        text: "Add Event",
-                        onPressed: createEvent,
+                        text: "Update Event",
+                        onPressed: updateEvent,
                       ),
                     ],
                   ),
@@ -292,7 +308,7 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 
-  void createEvent() {
+  void updateEvent() {
     if (formKey.currentState!.validate() &&
         selectedDate != null &&
         selectedTime != null) {
@@ -303,14 +319,22 @@ class _EditScreenState extends State<EditScreen> {
         selectedTime!.hour,
         selectedTime!.minute,
       );
-      EventModel event = EventModel(
+      EventModel updatedEvent = EventModel(
+        id: widget.event.id,
         tittle: tittleController.text,
         description: descriptionController.text,
         dateTime: dateTime,
         category: selectedCategory,
       );
-      FirebaseService.createEvent(event).then((_) {
-        Navigator.of(context).pop();
+      // EventModel event = EventModel(
+      //   tittle: tittleController.text,
+      //   description: descriptionController.text,
+      //   dateTime: dateTime,
+      //   category: selectedCategory,
+      //   id: widget.event.id,
+      // );
+      FirebaseService.updateEvent(updatedEvent).then((_) {
+        Navigator.pop(context, updatedEvent);
       });
     }
   }
