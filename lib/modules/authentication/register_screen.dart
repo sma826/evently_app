@@ -1,3 +1,5 @@
+import 'package:evently_application/firebase_service.dart';
+import 'package:evently_application/modules/home%20screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_assets.dart';
@@ -16,6 +18,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -33,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(height: 24),
               DefaultTextFormField(
                 hintText: 'Name',
-                controller: emailController,
+                controller: nameController,
                 prefixIconImageName: 'name',
               ),
               SizedBox(height: 16),
@@ -55,7 +58,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 prefixIconImageName: 'password',
               ),
               SizedBox(height: 16),
-              DefaultElevatedButton(text: 'Login', onPressed: () {}),
+              DefaultElevatedButton(text: 'Login', onPressed: () {
+                register();
+              }),
               SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -97,5 +102,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void register() {
+    FirebaseService.register(
+      name: nameController.text,
+      email: emailController.text,
+      password: passwordController.text,
+    ).then((user) {
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+    });
   }
 }
