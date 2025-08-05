@@ -50,12 +50,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 hintText: 'Password',
                 controller: passwordController,
                 prefixIconImageName: 'password',
+                isPassword: true,
               ),
               SizedBox(height: 16),
               DefaultTextFormField(
                 hintText: 'Re Password',
                 controller: passwordController,
                 prefixIconImageName: 'password',
+                isPassword: true,
               ),
               SizedBox(height: 16),
               DefaultElevatedButton(text: 'Login', onPressed: () {

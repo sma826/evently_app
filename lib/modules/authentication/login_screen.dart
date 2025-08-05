@@ -23,6 +23,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   Future signInWithGoogle(BuildContext context) async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -50,154 +51,170 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(Assets.verticalLogo),
-              SizedBox(height: 24),
-              DefaultTextFormField(
-                hintText: 'Email',
-                controller: emailController,
-                prefixIconImageName: 'email',
-              ),
-              SizedBox(height: 16),
-              DefaultTextFormField(
-                hintText: 'Password',
-                controller: passwordController,
-                prefixIconImageName: 'password',
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ForgetPasswordScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Forget Password?',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Inter',
-                        color: AppColors.primaryColor,
-                        fontStyle: FontStyle.italic,
-                        decorationColor: AppColors.primaryColor,
-                        decorationThickness: 1,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 5),
-              DefaultElevatedButton(
-                text: 'Login',
-                onPressed: () {
-                  login();
-                },
-              ),
-              SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account ?",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Inter',
-                      color: AppColors.black,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RegisterScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Create Account',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Inter',
-                        color: AppColors.primaryColor,
-                        fontStyle: FontStyle.italic,
-                        decorationColor: AppColors.primaryColor,
-                        decorationThickness: 1,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: AppColors.primaryColor,
-                      indent: 15,
-                      endIndent: 10,
-                      thickness: 1.25,
-                    ),
-                  ),
-                  Text(
-                    "or",
-                    style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: AppColors.primaryColor,
-                      indent: 15,
-                      endIndent: 10,
-                      thickness: 1.25,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.backgroundLight,
-                  padding: EdgeInsets.symmetric(horizontal: 74, vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    side: BorderSide(color: AppColors.primaryColor, width: 1),
-                  ),
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(Assets.verticalLogo),
+                SizedBox(height: 24),
+                DefaultTextFormField(
+                  hintText: 'Email',
+                  controller: emailController,
+                  prefixIconImageName: 'email',
+                  validator: (value) {
+                    if (value == null || value.length < 5) {
+                      return 'invalid email';
+                    }
+                    return null;
+                  },
                 ),
-                onPressed: () => signInWithGoogle(context),
-                child: Row(
+                SizedBox(height: 16),
+                DefaultTextFormField(
+                  hintText: 'Password',
+                  isPassword: true,
+                  controller: passwordController,
+                  prefixIconImageName: 'password',
+                  validator: (value) {
+                    if (value == null || value.length < 8) {
+                      return 'password must be at least 8 characters';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SvgPicture.asset("assets/icons/google.svg"),
-                    SizedBox(width: 10),
-                    Text(
-                      "Login With Google",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Inter',
-                        color: AppColors.primaryColor,
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ForgetPasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Forget Password?',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Inter',
+                          color: AppColors.primaryColor,
+                          fontStyle: FontStyle.italic,
+                          decorationColor: AppColors.primaryColor,
+                          decorationThickness: 1,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                SizedBox(height: 5),
+                DefaultElevatedButton(
+                  text: 'Login',
+                  onPressed: () {
+                    login();
+                  },
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account ?",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Inter',
+                        color: AppColors.black,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Create Account',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Inter',
+                          color: AppColors.primaryColor,
+                          fontStyle: FontStyle.italic,
+                          decorationColor: AppColors.primaryColor,
+                          decorationThickness: 1,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: AppColors.primaryColor,
+                        indent: 15,
+                        endIndent: 10,
+                        thickness: 1.25,
+                      ),
+                    ),
+                    Text(
+                      "or",
+                      style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Inter',
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: AppColors.primaryColor,
+                        indent: 15,
+                        endIndent: 10,
+                        thickness: 1.25,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.backgroundLight,
+                    padding: EdgeInsets.symmetric(horizontal: 74, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(color: AppColors.primaryColor, width: 1),
+                    ),
+                  ),
+                  onPressed: () => signInWithGoogle(context),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset("assets/icons/google.svg"),
+                      SizedBox(width: 10),
+                      Text(
+                        "Login With Google",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Inter',
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -205,13 +222,15 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() {
-    FirebaseService.login(
-      email: emailController.text,
-      password: passwordController.text,
-    ).then((user) {
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
-    });
+    if (formKey.currentState!.validate()) {
+      FirebaseService.login(
+        email: emailController.text,
+        password: passwordController.text,
+      ).then((user) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+      });
+    }
   }
 }
