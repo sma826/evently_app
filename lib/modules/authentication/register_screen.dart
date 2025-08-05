@@ -21,6 +21,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController rePasswordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,77 +31,105 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(Assets.verticalLogo),
-              SizedBox(height: 24),
-              DefaultTextFormField(
-                hintText: 'Name',
-                controller: nameController,
-                prefixIconImageName: 'name',
-              ),
-              SizedBox(height: 16),
-              DefaultTextFormField(
-                hintText: 'Email',
-                controller: emailController,
-                prefixIconImageName: 'email',
-              ),
-              SizedBox(height: 16),
-              DefaultTextFormField(
-                hintText: 'Password',
-                controller: passwordController,
-                prefixIconImageName: 'password',
-                isPassword: true,
-              ),
-              SizedBox(height: 16),
-              DefaultTextFormField(
-                hintText: 'Re Password',
-                controller: passwordController,
-                prefixIconImageName: 'password',
-                isPassword: true,
-              ),
-              SizedBox(height: 16),
-              DefaultElevatedButton(text: 'Login', onPressed: () {
-                register();
-              }),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already Have Account ?",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Inter',
-                      color: AppColors.black,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
-                    },
-                    child: Text(
-                      'Login',
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(Assets.verticalLogo),
+                SizedBox(height: 24),
+                DefaultTextFormField(
+                  hintText: 'Name',
+                  controller: nameController,
+                  prefixIconImageName: 'name',
+                  validator: (value) {
+                    if (value == null || value.length < 3) {
+                      return 'invalid name';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                DefaultTextFormField(
+                  hintText: 'Email',
+                  controller: emailController,
+                  prefixIconImageName: 'email',
+                  validator: (value) {
+                    if (value == null || value.length < 5) {
+                      return 'invalid email';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                DefaultTextFormField(
+                  hintText: 'Password',
+                  controller: passwordController,
+                  prefixIconImageName: 'password',
+                  isPassword: true,
+                  validator: (value) {
+                    if (value == null || value.length < 8) {
+                      return 'password must be at least 8 characters';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                DefaultTextFormField(
+                  hintText: 'Re Password',
+                  controller: rePasswordController,
+                  prefixIconImageName: 'password',
+                  isPassword: true,
+                  validator: (value) {
+                    if (value != passwordController.text) {
+                      return "doesn't match";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                DefaultElevatedButton(text: 'Login', onPressed: () {
+                  register();
+                }),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already Have Account ?",
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         fontFamily: 'Inter',
-                        color: AppColors.primaryColor,
-                        fontStyle: FontStyle.italic,
-                        decorationColor: AppColors.primaryColor,
-                        decorationThickness: 1,
-                        decoration: TextDecoration.underline,
+                        color: AppColors.black,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              LoginScreen()),
+                        );
+                      },
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Inter',
+                          color: AppColors.primaryColor,
+                          fontStyle: FontStyle.italic,
+                          decorationColor: AppColors.primaryColor,
+                          decorationThickness: 1,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -107,14 +137,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void register() {
-    FirebaseService.register(
-      name: nameController.text,
-      email: emailController.text,
-      password: passwordController.text,
-    ).then((user) {
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
-    });
+    if (formKey.currentState!.validate()) {
+      FirebaseService.register(
+        name: nameController.text,
+        email: emailController.text,
+        password: passwordController.text,
+      ).then((user) {
+        Navigator.of(
+          context,
+        ).pushReplacement(
+            MaterialPageRoute(builder: (context) => HomeScreen()));
+      });
+    }
   }
 }
