@@ -1,9 +1,11 @@
 import 'package:evently_application/firebase_service.dart';
 import 'package:evently_application/modules/home%20screen/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_assets.dart';
 import '../../core/constants/app_colors.dart';
+import '../../ui_utils.dart';
 import '../../widgets/elevated_button.dart';
 import '../../widgets/text_form_field.dart';
 import 'login_screen.dart';
@@ -147,6 +149,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           context,
         ).pushReplacement(
             MaterialPageRoute(builder: (context) => HomeScreen()));
+      }).catchError((error) {
+        String? errorMessage;
+        if (error is FirebaseAuthException) {
+          errorMessage = error.message;
+        }
+        UiUtils.showErrorMessage(errorMessage);
       });
     }
   }

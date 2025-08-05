@@ -4,6 +4,7 @@ import 'package:evently_application/firebase_service.dart';
 import 'package:evently_application/modules/authentication/forget_password_screen.dart';
 import 'package:evently_application/modules/authentication/register_screen.dart';
 import 'package:evently_application/modules/home%20screen/home_screen.dart';
+import 'package:evently_application/ui_utils.dart';
 import 'package:evently_application/widgets/elevated_button.dart';
 import 'package:evently_application/widgets/text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -230,7 +231,14 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()),
         );
-      });
+          })
+          .catchError((error) {
+            String? errorMessage;
+            if (error is FirebaseAuthException) {
+              errorMessage = error.message;
+            }
+            UiUtils.showErrorMessage(errorMessage);
+          });
     }
   }
 }
