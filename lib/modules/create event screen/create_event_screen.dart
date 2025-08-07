@@ -5,6 +5,7 @@ import 'package:evently_application/models/event_model.dart';
 import 'package:evently_application/modules/create%20event%20screen/tab_item_event_screen.dart';
 import 'package:evently_application/ui_utils.dart';
 import 'package:evently_application/widgets/elevated_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -305,6 +306,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
         selectedTime!.minute,
       );
       EventModel event = EventModel(
+        userId: FirebaseAuth.instance.currentUser!.uid,
         tittle: tittleController.text,
         description: descriptionController.text,
         dateTime: dateTime,

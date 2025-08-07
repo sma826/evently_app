@@ -4,6 +4,7 @@ import 'category_data_model.dart';
 
 class EventModel {
   String id;
+  String userId;
   String tittle;
   DateTime dateTime;
   String description;
@@ -11,6 +12,7 @@ class EventModel {
 
   EventModel({
     this.id = '',
+    required this.userId,
     required this.tittle,
     required this.description,
     required this.dateTime,
@@ -20,6 +22,7 @@ class EventModel {
   EventModel.fromJson(Map<String, dynamic> json)
     : this(
         id: json['id'],
+        userId: json['userId'],
         category: CategoryModel.categories.firstWhere(
           (category) => category.id == json['categoryId'],
         ),
@@ -30,6 +33,7 @@ class EventModel {
 
   Map<String, dynamic> toJson() => {
     'id': id,
+    'userId': userId,
     'tittle': tittle,
     'description': description,
     'categoryId': category.id,
