@@ -4,7 +4,7 @@ import 'package:evently_application/modules/onboarding%20screens/pre_inro_screen
 import 'package:flutter/material.dart';
 
 class SplashView extends StatefulWidget {
-  static var routeNames = '/splash_screen';
+  static const String routeName = '/splash';
 
   const SplashView({super.key});
 
