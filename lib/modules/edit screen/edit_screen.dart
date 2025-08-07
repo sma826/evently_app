@@ -3,6 +3,7 @@ import 'package:evently_application/firebase_service.dart';
 import 'package:evently_application/models/category_data_model.dart';
 import 'package:evently_application/models/event_model.dart';
 import 'package:evently_application/modules/create%20event%20screen/tab_item_event_screen.dart';
+import 'package:evently_application/ui_utils.dart';
 import 'package:evently_application/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -334,6 +335,7 @@ class _EditScreenState extends State<EditScreen> {
       //   id: widget.event.id,
       // );
       FirebaseService.updateEvent(updatedEvent).then((_) {
+        UiUtils.showSuccessMessage('Edited successfuly');
         Navigator.pop(context, updatedEvent);
       });
     }
