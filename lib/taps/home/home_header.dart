@@ -1,14 +1,12 @@
 import 'package:evently_application/core/constants/app_colors.dart';
 import 'package:evently_application/models/category_data_model.dart';
+import 'package:evently_application/providers/evrnts_provider.dart';
 import 'package:evently_application/taps/home/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HomeHeader extends StatefulWidget {
-  void Function(CategoryModel?) filterEvents;
-
-  HomeHeader({required this.filterEvents});
-
   @override
   State<HomeHeader> createState() => _HomeHeaderState();
 }
@@ -18,6 +16,7 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   @override
   Widget build(BuildContext context) {
+    EventsProvider eventsProvider = Provider.of<EventsProvider>(context);
     return Container(
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
@@ -82,7 +81,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                         currentIndex == 0
                             ? null
                             : CategoryModel.categories[currentIndex - 1];
-                    widget.filterEvents(selectedCategory);
+                    eventsProvider.filterEvents(selectedCategory);
                     setState(() {});
                   },
                   tabs: [

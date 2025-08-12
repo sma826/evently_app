@@ -1,12 +1,19 @@
 import 'package:evently_application/core/constants/app_theme_style.dart';
 import 'package:evently_application/modules/authentication/login_screen.dart';
+import 'package:evently_application/providers/evrnts_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => EventsProvider()..getEvents(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
