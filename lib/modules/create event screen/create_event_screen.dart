@@ -312,8 +312,9 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
         dateTime: dateTime,
         category: selectedCategory,
       );
-      FirebaseService.createEvent(event).then((_) {
-        Navigator.of(context).pop();
+      FirebaseService.createEvent(event)
+          .then((_) {
+            Navigator.of(context).pop();
             UiUtils.showSuccessMessage("Event Created Successfuly");
           })
           .catchError((_) {
