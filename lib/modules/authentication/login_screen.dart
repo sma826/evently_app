@@ -4,6 +4,7 @@ import 'package:evently_application/firebase_service.dart';
 import 'package:evently_application/modules/authentication/forget_password_screen.dart';
 import 'package:evently_application/modules/authentication/register_screen.dart';
 import 'package:evently_application/modules/home%20screen/home_screen.dart';
+import 'package:evently_application/providers/user_provider.dart';
 import 'package:evently_application/ui_utils.dart';
 import 'package:evently_application/widgets/elevated_button.dart';
 import 'package:evently_application/widgets/text_form_field.dart';
@@ -11,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -226,12 +228,17 @@ class _LoginScreenState extends State<LoginScreen> {
   void login() {
     if (formKey.currentState!.validate()) {
       FirebaseService.login(
-        email: emailController.text,
-        password: passwordController.text,
-      ).then((user) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
+            email: emailController.text,
+            password: passwordController.text,
+          )
+          .then((user) {
+            Provider.of<UserProvider>(
+              context,
+              listen: false,
+            ).UpdatCurrentUser(user);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
           })
           .catchError((error) {
             String? errorMessage;
