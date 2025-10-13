@@ -2,9 +2,11 @@ import 'package:evently_application/firebase_service.dart';
 import 'package:evently_application/modules/home%20screen/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart' show Provider;
 
 import '../../core/constants/app_assets.dart';
 import '../../core/constants/app_colors.dart';
+import '../../providers/user_provider.dart';
 import '../../ui_utils.dart';
 import '../../widgets/elevated_button.dart';
 import '../../widgets/text_form_field.dart';
@@ -91,9 +93,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 SizedBox(height: 16),
-                DefaultElevatedButton(text: 'Login', onPressed: () {
-                  register();
-                }),
+                DefaultElevatedButton(
+                  text: 'Login',
+                  onPressed: () {
+                    register();
+                  },
+                ),
                 SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -111,8 +116,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) =>
-                              LoginScreen()),
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
                         );
                       },
                       child: Text(
@@ -142,21 +148,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void register() {
     if (formKey.currentState!.validate()) {
       FirebaseService.register(
-        name: nameController.text,
-        email: emailController.text,
-        password: passwordController.text,
-      ).then((user) {
-        Navigator.of(
-          context,
-        ).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomeScreen()));
-      }).catchError((error) {
-        String? errorMessage;
-        if (error is FirebaseAuthException) {
-          errorMessage = error.message;
-        }
-        UiUtils.showErrorMessage(errorMessage);
-      });
+            name: nameController.text,
+            email: emailController.text,
+            password: passwordController.text,
+          )
+          .then((user) {
+            Provider.of<UserProvider>(
+              context,
+              listen: false,
+            ).UpdatCurrentUser(user);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          })
+          .catchError((error) {
+            String? errorMessage;
+            if (error is FirebaseAuthException) {
+              errorMessage = error.message;
+            }
+            UiUtils.showErrorMessage(errorMessage);
+          });
     }
   }
 }

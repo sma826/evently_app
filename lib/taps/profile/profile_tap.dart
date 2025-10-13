@@ -4,6 +4,9 @@ import 'package:evently_application/modules/authentication/login_screen.dart';
 import 'package:evently_application/taps/profile/profile_header.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart' show Provider;
+
+import '../../providers/user_provider.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -160,6 +163,10 @@ class _ProfileTabState extends State<ProfileTab> {
             child: ElevatedButton(
               onPressed: () {
                 FirebaseService.logout().then((_) {
+                  Provider.of<UserProvider>(
+                    context,
+                    listen: false,
+                  ).UpdatCurrentUser(null);
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
