@@ -9,7 +9,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/settings_provider.dart';
 import '../../widgets/text_form_field.dart';
 
 class CreateEventScreen extends StatefulWidget {
@@ -34,6 +36,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
@@ -105,7 +109,10 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       Text(
                         "Tittle",
                         style: TextStyle(
-                          color: AppColors.black,
+                          color:
+                              settingsProvider.isDark
+                                  ? AppColors.white
+                                  : AppColors.black,
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Inter',
@@ -127,7 +134,10 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       Text(
                         "Description",
                         style: TextStyle(
-                          color: AppColors.black,
+                          color:
+                              settingsProvider.isDark
+                                  ? AppColors.white
+                                  : AppColors.black,
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Inter',
@@ -147,12 +157,23 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       SizedBox(height: 20),
                       Row(
                         children: [
-                          SvgPicture.asset("assets/icons/date.svg"),
+                          SvgPicture.asset(
+                            "assets/icons/date.svg",
+                            colorFilter: ColorFilter.mode(
+                              settingsProvider.isDark
+                                  ? AppColors.white
+                                  : AppColors.black,
+                              BlendMode.srcIn,
+                            ),
+                          ),
                           SizedBox(width: 10),
                           Text(
                             "Event Date",
                             style: TextStyle(
-                              color: AppColors.black,
+                              color:
+                                  settingsProvider.isDark
+                                      ? AppColors.white
+                                      : AppColors.black,
                               fontSize: 17,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Inter',
@@ -192,12 +213,23 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       SizedBox(height: 16),
                       Row(
                         children: [
-                          SvgPicture.asset("assets/icons/time.svg"),
+                          SvgPicture.asset(
+                            "assets/icons/time.svg",
+                            colorFilter: ColorFilter.mode(
+                              settingsProvider.isDark
+                                  ? AppColors.white
+                                  : AppColors.black,
+                              BlendMode.srcIn,
+                            ),
+                          ),
                           SizedBox(width: 10),
                           Text(
                             "Event Time",
                             style: TextStyle(
-                              color: AppColors.black,
+                              color:
+                                  settingsProvider.isDark
+                                      ? AppColors.white
+                                      : AppColors.black,
                               fontSize: 17,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Inter',

@@ -1,6 +1,7 @@
 import 'package:evently_application/core/constants/app_theme_style.dart';
-import 'package:evently_application/modules/authentication/login_screen.dart';
-import 'package:evently_application/providers/evrnts_provider.dart';
+import 'package:evently_application/modules/home%20screen/home_screen.dart';
+import 'package:evently_application/providers/events_provider.dart';
+import 'package:evently_application/providers/settings_provider.dart';
 import 'package:evently_application/providers/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => EventsProvider()..getEvents()),
+        ChangeNotifierProvider(create: (_) => SettingsProvider()),
       ],
       child: MyApp(),
     ),
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return MaterialApp(
       // theme: ThemeData(
       //     timePickerTheme: TimePickerThemeData(
@@ -51,10 +54,10 @@ class MyApp extends StatelessWidget {
       //   CreateEventScreen.routeName : (_) => CreateEventScreen(),
       // },
       // initialRoute: SplashView.routeName, // start at splash
-      home: LoginScreen(),
+      home: HomeScreen(),
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
+      themeMode: settingsProvider.themeMode,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:evently_application/core/constants/app_colors.dart';
 import 'package:evently_application/models/category_data_model.dart';
-import 'package:evently_application/providers/evrnts_provider.dart';
+import 'package:evently_application/providers/events_provider.dart';
+import 'package:evently_application/providers/settings_provider.dart';
 import 'package:evently_application/taps/home/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,9 +18,13 @@ class _HomeHeaderState extends State<HomeHeader> {
   @override
   Widget build(BuildContext context) {
     EventsProvider eventsProvider = Provider.of<EventsProvider>(context);
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        color:
+            settingsProvider.isDark
+                ? AppColors.backgroundDark
+                : AppColors.primaryColor,
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(28),
           bottomLeft: Radius.circular(28),

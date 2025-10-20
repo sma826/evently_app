@@ -49,11 +49,63 @@ class AppTheme {
                   borderRadius: BorderRadius.circular(16)
               )
           )
-      )
-    // floatingActionButtonTheme: FloatingActionButtonThemeData(
-    //   backgroundColor: AppColors.primaryColor,
-    //   shape: CircleBorder()
-    // ),
+      ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: AppColors.primaryColor,
+        shape: CircleBorder()
+    ),
   );
-  static ThemeData darkTheme = ThemeData();
+  static ThemeData darkTheme = ThemeData(
+    scaffoldBackgroundColor: AppColors.backgroundDark,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: AppColors.backgroundDark,
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: AppColors.white,
+      unselectedItemColor: AppColors.white,
+      // showSelectedLabels: true,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: TextStyle(
+          color: AppColors.grey,
+          fontSize: 16,
+          fontWeight: FontWeight.w500
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.grey),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.grey),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.red),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.red),
+        borderRadius: BorderRadius.circular(16),
+      ),
+    ),
+    textTheme: TextTheme(
+        titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          fontFamily: 'Inter',
+          color: AppColors.white,
+        )
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.backgroundDark,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16)
+            )
+        )
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: AppColors.backgroundDark,
+        shape: CircleBorder()
+    ),
+  );
 }

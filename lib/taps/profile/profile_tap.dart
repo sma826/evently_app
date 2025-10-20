@@ -1,6 +1,7 @@
 import 'package:evently_application/core/constants/app_colors.dart';
 import 'package:evently_application/firebase_service.dart';
 import 'package:evently_application/modules/authentication/login_screen.dart';
+import 'package:evently_application/providers/settings_provider.dart';
 import 'package:evently_application/taps/profile/profile_header.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -28,6 +29,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 35),
       child: Column(
@@ -39,7 +41,8 @@ class _ProfileTabState extends State<ProfileTab> {
             child: Text(
               "Language",
               style: TextStyle(
-                color: AppColors.black,
+                color:
+                    settingsProvider.isDark ? AppColors.white : AppColors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 fontFamily: 'Inter',
@@ -103,15 +106,22 @@ class _ProfileTabState extends State<ProfileTab> {
                 Text(
                   "Dark Theme",
                   style: TextStyle(
-                    color: AppColors.black,
+                    color:
+                        settingsProvider.isDark
+                            ? AppColors.white
+                            : AppColors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     fontFamily: 'Inter',
                   ),
                 ),
                 Switch(
-                  value: true,
-                  onChanged: (value) {},
+                  value: settingsProvider.isDark,
+                  onChanged: (isDark) {
+                    settingsProvider.changeTheme(
+                      isDark ? ThemeMode.dark : ThemeMode.light,
+                    );
+                  },
                   activeTrackColor: AppColors.primaryColor,
                   inactiveTrackColor: AppColors.grey,
                   inactiveThumbColor: AppColors.white,
