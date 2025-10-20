@@ -1,5 +1,6 @@
 import 'package:evently_application/core/constants/app_colors.dart';
 import 'package:evently_application/firebase_service.dart';
+import 'package:evently_application/l10n/app_localizations.dart';
 import 'package:evently_application/modules/authentication/login_screen.dart';
 import 'package:evently_application/providers/settings_provider.dart';
 import 'package:evently_application/taps/profile/profile_header.dart';
@@ -39,7 +40,7 @@ class _ProfileTabState extends State<ProfileTab> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              "Language",
+              "عربي",
               style: TextStyle(
                 color:
                     settingsProvider.isDark ? AppColors.white : AppColors.black,
@@ -53,7 +54,7 @@ class _ProfileTabState extends State<ProfileTab> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: DropdownButtonFormField(
-              value: 'en',
+              value: settingsProvider.languageCode,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -92,8 +93,9 @@ class _ProfileTabState extends State<ProfileTab> {
                         ),
                       )
                       .toList(),
-              onChanged: (value) {
-                setState(() {});
+              onChanged: (languageCode) {
+                if (languageCode == null) return;
+                settingsProvider.changeLanguage(languageCode);
               },
             ),
           ),
@@ -104,7 +106,7 @@ class _ProfileTabState extends State<ProfileTab> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Dark Theme",
+                  "الوضع الليلي",
                   style: TextStyle(
                     color:
                         settingsProvider.isDark
@@ -198,7 +200,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   Icon(Icons.logout_rounded, size: 24, color: AppColors.white),
                   SizedBox(width: 8),
                   Text(
-                    "Logout",
+                    AppLocalizations.of(context)!.logout,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
