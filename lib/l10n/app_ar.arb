@@ -1,0 +1,9 @@
+{
+  "login": "تسجيل دخول",
+  "createAccount": "انشاء حساب",
+  "logout": "تسجيل خروج",
+  "forget_password": "نسيت كلمة السر",
+  "email": "Email",
+  "password": "كلمة السر",
+  "confirm_password": "تحقق من كلمة السر"
+}
