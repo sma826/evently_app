@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 13),
                 DefaultTextFormField(
                   hintText: 'Password',
                   isPassword: true,

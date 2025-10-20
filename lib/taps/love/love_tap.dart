@@ -1,4 +1,5 @@
-import 'package:evently_application/providers/evrnts_provider.dart';
+import 'package:evently_application/providers/events_provider.dart';
+import 'package:evently_application/providers/user_provider.dart';
 import 'package:evently_application/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,12 @@ class _LoveTabState extends State<LoveTab> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      eventsProvider.filterFavouriteEvents([]);
+      List<String> favouriteEventsIds =
+          Provider.of<UserProvider>(
+            context,
+            listen: false,
+          ).currentUser!.favouriteEvents;
+      eventsProvider.filterFavouriteEvents(favouriteEventsIds);
     });
   }
 
@@ -40,9 +46,10 @@ class _LoveTabState extends State<LoveTab> {
             SizedBox(height: 16),
             Expanded(
               child: ListView.separated(
-                itemBuilder: (_, index) =>
-                    EventItem(eventsProvider.favouriteEvents[index]),
-                separatorBuilder: (_, _) => SizedBox(height: 16,),
+                itemBuilder:
+                    (_, index) =>
+                        EventItem(eventsProvider.favouriteEvents[index]),
+                separatorBuilder: (_, _) => SizedBox(height: 16),
                 itemCount: eventsProvider.favouriteEvents.length,
               ),
             ),

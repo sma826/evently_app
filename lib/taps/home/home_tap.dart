@@ -1,6 +1,6 @@
 import 'package:evently_application/models/event_model.dart';
 import 'package:evently_application/modules/details%20screen/details_screen.dart';
-import 'package:evently_application/providers/evrnts_provider.dart';
+import 'package:evently_application/providers/events_provider.dart';
 import 'package:evently_application/taps/home/home_header.dart';
 import 'package:evently_application/widgets/event_item.dart';
 import 'package:flutter/material.dart';
